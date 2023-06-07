@@ -14,7 +14,7 @@ MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún");
 struct sysinfo inf;
 
 static int write_file(struct seq_file *file, void *v){
-    long total_mem, free_mem, consumed_mem;
+    long total_mem, free_mem;
     si_meminfo(&inf);
     total_mem = (inf.totalram * 4 / 1024);
     free_mem = (inf.freeram * 4 / 1024);
