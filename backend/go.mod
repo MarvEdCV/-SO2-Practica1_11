@@ -1,4 +1,4 @@
-module github.com/MarvEdCV/-SO2-PRACTICA1_11
+module github.com/MarvEdCV/so2-practica1-11
 
 go 1.20
 
