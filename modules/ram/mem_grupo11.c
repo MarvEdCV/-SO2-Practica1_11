@@ -1,7 +1,7 @@
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/seq_file.h>
-#include <linux/sysinfo.h>
+#include <linux/mm.h>
 
 
 MODULE_LICENSE("GPL");
@@ -14,15 +14,15 @@ static int write_file(struct seq_file *file, void *v){
     si_meminfo(&inf);
     long total_mem = (inf.totalram * 4 / 1024);
     long free_mem = (inf.freeram * 4 / 1024);
-    seq_file(file, "{\n");
+    seq_printf(file, "{\n");
     seq_printf(file, " \"MemoriaTotal\":%8lu,\n", total_mem);
     seq_printf(file, " \"MemoriaLibre\":%8lu,\n", free_mem);
     seq_printf(file, " \"MemoriaUsada\":%i\n", (free_mem / total_mem) * 100);
-    seq_printf(archivo, "}\n");
+    seq_printf(file, "}\n");
     return 0;
 }
 
-static int to_open(struct *inode, struct file *file){
+static int to_open(struct inode *inode, struct file *file){
     return single_open(file, write_file, NULL);
 }
 
