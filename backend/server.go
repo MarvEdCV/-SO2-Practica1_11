@@ -51,7 +51,7 @@ func LeerCpu(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		log.Fatal(err)
 	}
-	go fmt.Println("Ram obtenida correctamente")
+	go fmt.Println("Módulo CPU obtenido correctamente")
   output := string(out[:])
 
   fmt.Fprintf(w, output)
@@ -64,10 +64,8 @@ func LeerRam(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		log.Fatal(err)
 	}
-
-  //go fmt.Println("Ram obtenida correctamente")
+	go fmt.Println("Módulo RAM obtenido correctamente")
   output := string(out[:])
-
   fmt.Fprintf(w, output)
 }
 
@@ -97,13 +95,7 @@ func main() {
 	go router.HandleFunc("/leerram", LeerRam).Methods("GET")
 	go router.HandleFunc("/leercpu", LeerCpu).Methods("GET")
 	go router.HandleFunc("/cpu", getCPU).Methods("GET")
-	//go router.HandleFunc("/statistics", Statistics).Methods("GET")
-	//go router.HandleFunc("/allprocess", getAllProcess).Methods("GET")
 	go router.HandleFunc("/killprocess", killProcess).Methods("POST")
-	//go router.HandleFunc("/treeprocess", getTreeProcess).Methods("GET")
-	// cors.Default() setup the middleware with default options being
-    // all origins accepted with simple methods (GET, POST). See
-	// documentation below for more options.
 	time.Sleep(time.Second)
     handler := cors.Default().Handler(router)
 	http.ListenAndServe(":8080", handler)
