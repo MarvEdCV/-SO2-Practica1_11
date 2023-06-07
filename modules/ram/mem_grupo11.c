@@ -12,14 +12,11 @@ static int mount_module(void)
     return 0;
 }
 
-static void salir(void)
-{
-    //remove_proc_entry("memo_practica1", NULL);
-    printk(KERN_INFO "Sistemas Operativos 2\n");
-}
-
 static void disassemble_module(void)
 {
     //remove_proc_entry("memo_practica1", NULL);
     printk(KERN_INFO "ayonara mundo, somos el grupo 11 y este fue el monitor de memoria\n");
 }
+
+module_init(mount_module);
+module_exit(disassemble_module);
