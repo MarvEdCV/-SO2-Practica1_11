@@ -6,6 +6,7 @@
 #include <linux/kernel.h>
 #include <linux/sysinfo.h>
 
+
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Monitor modulo CPU");
 MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún");
