@@ -2,6 +2,7 @@
 #include <linux/init.h>
 #include <linux/seq_file.h>
 #include <linux/mm.h>
+#include <linux/proc_fs.h>
 
 
 MODULE_LICENSE("GPL");
@@ -17,7 +18,7 @@ static int write_file(struct seq_file *file, void *v){
     seq_printf(file, "{\n");
     seq_printf(file, " \"MemoriaTotal\":%8lu,\n", total_mem);
     seq_printf(file, " \"MemoriaLibre\":%8lu,\n", free_mem);
-    seq_printf(file, " \"MemoriaUsada\":%i\n", (free_mem / total_mem) * 100);
+    seq_printf(file, " \"MemoriaUsada\":%.2f\n", (float) free_mem / total_mem * 100);
     seq_printf(file, "}\n");
     return 0;
 }
