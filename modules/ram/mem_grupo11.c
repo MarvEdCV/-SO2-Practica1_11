@@ -3,6 +3,8 @@
 #include <linux/seq_file.h>
 #include <linux/mm.h>
 #include <linux/proc_fs.h>
+#include <linux/kernel.h>
+#include <linux/sysinfo.h>
 
 
 MODULE_LICENSE("GPL");
@@ -12,14 +14,17 @@ MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún");
 struct sysinfo inf;
 
 static int write_file(struct seq_file *file, void *v){
-    long total_mem, free_mem;
+    long total_mem, free_mem, consumed_mem;
+    float percentage;
     si_meminfo(&inf);
     total_mem = (inf.totalram * 4 / 1024);
     free_mem = (inf.freeram * 4 / 1024);
+    consumed_mem = total_mem - free_mem;
+    percentage = ((float)consumed_mem/total_mem) * 100;
     seq_printf(file, "{\n");
     seq_printf(file, " \"MemoriaTotal\":%8lu,\n", total_mem);
     seq_printf(file, " \"MemoriaLibre\":%8lu,\n", free_mem);
-    seq_printf(file, " \"MemoriaUsada\":%i\n", (free_mem * 100) / total_mem);
+    seq_printf(file, " \"MemoriaUsada\":%i\n", percentage;
     seq_printf(file, "}\n");
     return 0;
 }
