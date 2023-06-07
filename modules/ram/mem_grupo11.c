@@ -2,7 +2,7 @@
 #include <linux/init.h>
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Escribir informacion de la memoria ram.");
+MODULE_DESCRIPTION("Monitor modulo RAM");
 MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún");
 
 static int mount_module(void)
@@ -15,7 +15,7 @@ static int mount_module(void)
 static void disassemble_module(void)
 {
     //remove_proc_entry("memo_practica1", NULL);
-    printk(KERN_INFO "ayonara mundo, somos el grupo 11 y este fue el monitor de memoria\n");
+    printk(KERN_INFO "Sayonara mundo, somos el grupo 11 y este fue el monitor de memoria\n");
 }
 
 module_init(mount_module);
