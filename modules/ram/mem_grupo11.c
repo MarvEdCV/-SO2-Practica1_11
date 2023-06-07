@@ -24,7 +24,7 @@ static int write_file(struct seq_file *file, void *v){
     seq_printf(file, "{\n");
     seq_printf(file, " \"MemoriaTotal\":%8lu,\n", total_mem);
     seq_printf(file, " \"MemoriaLibre\":%8lu,\n", free_mem);
-    seq_printf(file, " \"MemoriaUsada\":%i\n", percentage;
+    seq_printf(file, " \"MemoriaUsada\":%f\n", percentage);
     seq_printf(file, "}\n");
     return 0;
 }
