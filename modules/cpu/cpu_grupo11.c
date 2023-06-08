@@ -38,17 +38,6 @@ static int write_file(struct seq_file *file, void *v){
         seq_printf(file, "\"Usuario\": %d, \n", (int) processes->sessionid);
         seq_printf(file, "\"Memory\": \"%d\", \n",__kuid_val(processes->real_cred->uid));
         seq_printf(file, "\"Estado\": %ld} \n", processes->__state);
-
-        list_for_each(p, &(processes->children)){
-            seq_printf(file, ",{\n");
-            ts = *list_entry(p, struct task_struct, sibling);
-            seq_printf(file, "     \"proceso padre\":%d,\n", processes->pid);
-            seq_printf(file, "     \"PID\":%d, \n", ts.pid);
-            seq_printf(file, "     \"Nombre\":\"%s\",\n", ts.comm);
-            seq_printf(file, "     \"Usuario\": %d, \n", (int) processes->sessionid);
-            seq_printf(file, "     \"Estado\":%ld \n", ts.__state);
-            seq_printf(file, "}\n");
-        }
     }
 
     seconditerative=false;
