@@ -55,6 +55,7 @@ static int write_file(struct seq_file *file, void *v){
         seq_printf(file, "\"id\": %d, \n", processes->pid);
         seq_printf(file, "\"parentId\": %d ,\n",0);
         seq_printf(file, "\"label\": \"%s\", \n", processes->comm);
+        seq_printf(file, "\"items\": %s \n", "[]");
         seq_printf(file, "}\n");
 
         list_for_each(p, &(processes->children)){
@@ -63,6 +64,7 @@ static int write_file(struct seq_file *file, void *v){
             seq_printf(file, "     \"id\":%d, \n", ts.pid);
             seq_printf(file, "     \"label\":\"%s\",\n", ts.comm);
             seq_printf(file, "     \"parentId\":%d,\n", processes->pid);
+            seq_printf(file, "\"items\": %s \n", "[]");
             seq_printf(file, "}\n");
         }             
     }
