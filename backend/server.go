@@ -13,38 +13,6 @@ import (
 	"time"
 )
 
-func getCPU(w http.ResponseWriter, r *http.Request) {
-    cmd := exec.Command("sh", "-c", "ps -eo pcpu | sort -k 1 -r | head -50")
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-    go fmt.Println("CPU obtenido correctamente")
-
-    output := string(out[:])
-	//fmt.Fprintf(w, output)
-
-    s := strings.Split(output, "\n")
-    cpuUsado := 0.0
-    for i := 1; i < 51; i++ {
-
-    	valor, err := strconv.ParseFloat(strings.Trim(s[i], " "), 64)
-    	if err != nil {
-    		go fmt.Println("valorError ->" + s[i] + "<-" + strconv.Itoa(i))
-    		go fmt.Println(err)
-		}
-
-		cpuUsado += valor 
-		//go fmt.Println("valor ->" + s[i] + "<-" + strconv.Itoa(i))
-
-	}
-
-
-    fmt.Fprintf(w, "%f", cpuUsado)
-}
-
-
 func LeerCpu(w http.ResponseWriter, r *http.Request){
 	cmd := exec.Command("sh", "-c", "cat /proc/cpu_grupo11")
 	out, err := cmd.CombinedOutput()
@@ -94,7 +62,6 @@ func main() {
 	go fmt.Println("Server Running on port: 8080")
 	go router.HandleFunc("/leerram", LeerRam).Methods("GET")
 	go router.HandleFunc("/leercpu", LeerCpu).Methods("GET")
-	go router.HandleFunc("/cpu", getCPU).Methods("GET")
 	go router.HandleFunc("/killprocess", killProcess).Methods("POST")
 	time.Sleep(time.Second)
     handler := cors.Default().Handler(router)
