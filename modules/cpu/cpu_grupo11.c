@@ -42,7 +42,7 @@ static int write_file(struct seq_file *file, void *v){
         list_for_each(p, &(processes->children)){
             seq_printf(file, ",{\n");
             ts = *list_entry(p, struct task_struct, sibling);
-            seq_printf(file, "     \"processes padre\":%d,\n", processes->pid);
+            seq_printf(file, "     \"proceso padre\":%d,\n", processes->pid);
             seq_printf(file, "     \"PID\":%d, \n", ts.pid);
             seq_printf(file, "     \"Nombre\":\"%s\",\n", ts.comm);
             seq_printf(file, "     \"Usuario\": %d, \n", (int) processes->sessionid);
