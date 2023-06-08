@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"github.com/gorilla/mux"
 	"os/exec"
-	"strings"
-	"strconv"
 	"github.com/rs/cors"
 	"bytes"
 	"time"
