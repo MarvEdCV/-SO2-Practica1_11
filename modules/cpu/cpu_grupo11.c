@@ -14,7 +14,7 @@ struct task_struct *processes, ts, *tsk;
 
 MODULE_LICENSE("GPL");                          // Licencia del módulo
 MODULE_DESCRIPTION("Monitor modulo CPU");        // Descripción del módulo
-MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún");  // Autores del módulo
+MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún, Wilson Eduardo Perez Echeverria");  // Autores del módulo
 
 // Función para escribir en el archivo de secuencia
 static int write_file(struct seq_file *file, void *v){
