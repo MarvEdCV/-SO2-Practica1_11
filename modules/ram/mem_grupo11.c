@@ -16,8 +16,8 @@ struct sysinfo inf;   // Estructura para almacenar información del sistema
 static int write_file(struct seq_file *file, void *v){
     long total_mem, free_mem;
     si_meminfo(&inf);   // Obtener información de memoria del sistema y almacenarla en la estructura inf
-    total_mem = (inf.totalram * 4 / 1024);   // Calcular la cantidad total de memoria en kilobytes
-    free_mem = (inf.freeram * 4 / 1024);     // Calcular la cantidad de memoria libre en kilobytes
+    total_mem = (inf.totalram * 4 / 1024);   // Calcular la cantidad total de memoria en mb
+    free_mem = (inf.freeram * 4 / 1024);     // Calcular la cantidad de memoria libre en mb
     seq_printf(file, "{\n");                                      // Escribir una cadena en el archivo de secuencia
     seq_printf(file, " \"MemoriaTotal\":%8lu,\n", total_mem);       // Escribir la cantidad total de memoria
     seq_printf(file, " \"MemoriaLibre\":%8lu,\n", free_mem);        // Escribir la cantidad de memoria libre
