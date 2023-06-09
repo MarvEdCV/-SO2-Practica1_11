@@ -8,7 +8,7 @@
 
 MODULE_LICENSE("GPL");                            // Licencia del módulo
 MODULE_DESCRIPTION("Monitor modulo RAM");         // Descripción del módulo
-MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún"); // Autores del módulo
+MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún, Wilson Eduardo Perez Echeverria"); // Autores del módulo
 
 struct sysinfo inf;   // Estructura para almacenar información del sistema
 
