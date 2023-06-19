@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Monitor URL={"http://34.125.205.134:8080"} />
+    <Monitor URL={"https://918c-2803-d100-98a8-341e-ac5f-cfc6-c56b-a689.ngrok.io"} />
   </React.StrictMode>,
   document.getElementById('root')
 );

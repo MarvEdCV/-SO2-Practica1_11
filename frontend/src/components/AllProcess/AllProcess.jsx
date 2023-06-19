@@ -2,6 +2,7 @@ import React from 'react';
 import './AllProcess.css';
 import { Table, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import Form from "react-bootstrap/Form";
 export default class AllProcess extends React.Component {
@@ -18,6 +19,12 @@ export default class AllProcess extends React.Component {
   };
   killprocess(e) {
     axios.post(this.props.URL + `/killprocess`, e.target.value)
+      .then(res => {
+        console.log(res.data);
+      })
+  }
+  prueba(e) {
+    axios.post(this.props.URL + `/leermaps`, e.target.value)
       .then(res => {
         console.log(res.data);
       })
@@ -66,6 +73,19 @@ export default class AllProcess extends React.Component {
                     >
                       kill
                     </Button>
+                    
+                  </td>
+                  <td>
+                 
+                  <Button
+                      id={process.PID}
+                      value={process.PID}
+                      variant="warning"
+                     
+                    >
+                      <Link to={`/INFORAM/${process.PID}/${encodeURIComponent(process.Nombre)}`}>RAM</Link>
+                    </Button>
+
                   </td>
                 </tr>
               );

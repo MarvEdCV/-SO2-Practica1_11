@@ -9,6 +9,7 @@ import {
 import Homepage from '../Homepage/Homepage';
 import RAM from '../RAM/RAM';
 import HOME from '../Home/Home';
+import RamInfo from '../RamInfo/RamInfo'
 export default class Monitor extends React.Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,9 @@ export default class Monitor extends React.Component {
                         </Route>
                         <Route exact path="/CPU">
                             <Homepage URL={this.props.URL} />
+                        </Route>
+                        <Route exact path="/INFORAM/:id/:nombre">
+                            <RamInfo URL={this.props.URL} />
                         </Route>
                     </Switch>
                 </Router>
