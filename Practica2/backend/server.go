@@ -16,8 +16,12 @@ import (
 	"github.com/rs/cors"     // Importar paquete para configurar CORS (Cross-Origin Resource Sharing)
 )
 
+/*
+** Función para de terminar que la api esta en funcionamiento
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
+ */
 func Inicio(w http.ResponseWriter, r *http.Request) {
-	// Ejecutar el comando "cat /proc/cpu_grupo11" en el sistema operativo
 	go fmt.Println("Grupo 11 n_n")
 	output := "Hola te saluda grupo 11 de Sopes2"
 
@@ -26,11 +30,10 @@ func Inicio(w http.ResponseWriter, r *http.Request) {
 
 /*
 ** Función para leer el módulo de CPU
-** @param w
-** @param r
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
  */
 func LeerCpu(w http.ResponseWriter, r *http.Request) {
-	// Ejecutar el comando "cat /proc/cpu_grupo11" en el sistema operativo
 	cmd := exec.Command("sh", "-c", "cat /proc/cpu_grupo11")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -42,9 +45,12 @@ func LeerCpu(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, output)
 }
 
-// Función para leer el módulo de RAM
+/*
+** Función para leer el módulo de RAM
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
+ */
 func LeerRam(w http.ResponseWriter, r *http.Request) {
-	// Ejecutar el comando "cat /proc/mem_grupo11" en el sistema operativo
 	cmd := exec.Command("sh", "-c", "cat /proc/mem_grupo11")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -55,15 +61,17 @@ func LeerRam(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, output)
 }
 
-// Función para matar un proceso
+/*
+** Función para matar un proceso
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
+ */
 func killProcess(w http.ResponseWriter, r *http.Request) {
-	// Leer el cuerpo de la solicitud HTTP para obtener el ID del proceso a matar
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
 	newStr := buf.String()
 	str := "kill " + newStr
 
-	// Ejecutar el comando "kill <pid>" en el sistema operativo
 	cmd := exec.Command("sh", "-c", str)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -73,7 +81,9 @@ func killProcess(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
-// Estructura para representar una entrada en el mapa de memoria
+/*
+** Estructura para representar una entrada en el mapa de memoria
+ */
 type MemoryMapEntry struct {
 	AddressRange string `json:"addressRange"`
 	Permissions  string `json:"permissions"`
@@ -84,16 +94,21 @@ type MemoryMapEntry struct {
 	Size         uint64 // Nuevo campo para el tamaño de la región de memoria
 }
 
-// Estructura para el resultado de LeerMaps
+/*
+** Estructura para el resultado de LeerMaps
+ */
 type MapsResult struct {
 	PID   string           `json:"pid"`
 	Maps  []MemoryMapEntry `json:"maps"`
 	Error string           `json:"error,omitempty"`
 }
 
-// Función para acceder a maps
+/*
+** Función para acceder a maps
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
+ */
 func LeerMaps(w http.ResponseWriter, r *http.Request) {
-	// Leer el cuerpo de la solicitud HTTP para obtener el PID de una tarea
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
 	newStr := buf.String()
@@ -118,7 +133,11 @@ func LeerMaps(w http.ResponseWriter, r *http.Request) {
 	sendJSONResponse(w, http.StatusOK, response)
 }
 
-// Función para calcular el tamaño de una región de memoria
+/*
+** Función para calcular el tamaño de una región de memoria
+** @param entry recibe estructiura tipo MemoryMapEntry
+** return valor tipo numerico y error
+ */
 func CalculateMemorySize(entry MemoryMapEntry) (uint64, error) {
 	addressRange := entry.AddressRange
 	rangeParts := strings.Split(addressRange, "-")
@@ -137,7 +156,11 @@ func CalculateMemorySize(entry MemoryMapEntry) (uint64, error) {
 	return size, nil
 }
 
-// Función para analizar la salida del archivo maps
+/*
+** Función para analizar la salida del archivo maps
+** @param output recibe parametro tipo string
+** return arreglo de structuras MemoryMapEntry
+ */
 func parseMemoryMapsOutput(output string) []MemoryMapEntry {
 	lines := strings.Split(output, "\n")
 	entries := make([]MemoryMapEntry, 0)
@@ -169,20 +192,25 @@ func parseMemoryMapsOutput(output string) []MemoryMapEntry {
 	return entries
 }
 
-// Función para enviar una respuesta HTTP con formato JSON
+/*
+** Función para enviar una respuesta HTTP con formato JSON
+** @param w respuesta del endpoint
+** @param r peticion del endpoint
+ */
 func sendJSONResponse(w http.ResponseWriter, statusCode int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	json.NewEncoder(w).Encode(data)
 }
 
+/*
+** Función principal
+ */
 func main() {
-	// Crear un enrutador utilizando el paquete gorilla/mux
 	router := mux.NewRouter().StrictSlash(true)
 
 	go fmt.Println("Server Running on port: 8080")
 
-	// Definir las rutas y las funciones de controlador correspondientes
 	go router.HandleFunc("/", Inicio).Methods("GET")
 	go router.HandleFunc("/leerram", LeerRam).Methods("GET")          // Ruta para leer el módulo de RAM
 	go router.HandleFunc("/leercpu", LeerCpu).Methods("GET")          // Ruta para leer el módulo de CPU

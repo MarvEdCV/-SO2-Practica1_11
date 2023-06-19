@@ -12,7 +12,11 @@ MODULE_AUTHOR("Marvin Eduardo Catalán Véliz, Sara Paulina Medrano Cojulún, Wi
 
 struct sysinfo inf;   // Estructura para almacenar información del sistema
 
-// Función para escribir en el archivo de secuencia
+/*
+** Función para escribir en el archivo de secuencia
+** @param seq_file tipo file para tener control sonbre archivos
+** @param v tipo void
+ */
 static int write_file(struct seq_file *file, void *v){
     long total_mem, free_mem;
     si_meminfo(&inf);   // Obtener información de memoria del sistema y almacenarla en la estructura inf
@@ -26,7 +30,11 @@ static int write_file(struct seq_file *file, void *v){
     return 0;
 }
 
-// Función para abrir el archivo
+/*
+** Función para abrir el archivo
+** @param inode structura tipo inode
+** @param file structura tipo file para tener control sonbre archivos
+ */
 static int to_open(struct inode *inode, struct file *file){
     return single_open(file, write_file, NULL);   // Abrir el archivo de secuencia y llamar a la función write_file
 }
@@ -38,29 +46,38 @@ static int to_open(struct inode *inode, struct file *file){
     .proc_read = seq_read   // Puntero a la función de lectura de secuencia
 };*/ 
 
-// Si el kernel es anterior a 5.6, se utilizan file_operations
+/*
+** Si el kernel es anterior a 5.6, se utilizan file_operations
+ */
 static struct file_operations operations =
 {
     .open = to_open,   // Puntero a la función que se ejecuta al abrir el archivo /proc
     .read = seq_read    // Puntero a la función de lectura de secuencia
 };
 
-
-// Función de montaje del módulo
+/*
+** Función de montaje del módulo
+ */
 static int mount_module(void){
     proc_create("mem_grupo11", 0, NULL, &operations);   // Crear una entrada en /proc para el archivo "mem_grupo11"
     printk(KERN_INFO "Hola mundo, somos el grupo 11 y este es el monitor de memoria\n");   // Imprimir un mensaje en el registro del kernel
     return 0;
 }
 
-// Función de desmontaje del módulo
+/*
+** Función de desmontaje del módulo
+ */
 static void disassemble_module(void){
     remove_proc_entry("mem_grupo11", NULL);   // Eliminar la entrada en /proc para el archivo "mem_grupo11"
     printk(KERN_INFO "Sayonara mundo, somos el grupo 11 y este fue el monitor de memoria\n");   // Imprimir un mensaje en el registro del kernel
 }
 
-// Especificar la función de inicialización del módulo
+/*
+** Especificar la función de inicialización del módulo
+ */
 module_init(mount_module);
 
-// Especificar la función de desmontaje del módulo
+/*
+** Especificar la función de desmontaje del módulo
+ */
 module_exit(disassemble_module);
