@@ -1,0 +1,7 @@
+.react-tree {
+    background-color: red; /* Cambia el color de fondo del árbol a rojo */
+  }
+  
+  .react-tree .node {
+    color: white; /* Cambia el color del texto de los nodos a blanco */
+  }
