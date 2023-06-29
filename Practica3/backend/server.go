@@ -374,6 +374,12 @@ func sendJSONResponse(w http.ResponseWriter, statusCode int, data interface{}) {
 		}
 	}
 */
+
+// sendJSONResponseB envía una respuesta HTTP en formato JSON.
+// Recibe los siguientes parámetros:
+// - w: objeto http.ResponseWriter utilizado para enviar la respuesta HTTP.
+// - status: código de estado HTTP a enviar en la respuesta.
+// - data: interfaz que contiene los datos a serializar como JSON y enviar en la respuesta.
 func sendJSONResponseB(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
@@ -385,15 +391,22 @@ func sendJSONResponseB(w http.ResponseWriter, status int, data interface{}) {
 	w.Write(jsonData)
 }
 
+
+// Block representa un bloque de datos.
 type Block struct {
 	Size string `json:"size"`
 	Rss  string `json:"Rss"`
 }
 
+// Data representa una estructura de datos que contiene una lista de bloques.
 type Data struct {
 	Blocks []Block `json:"data"`
 }
 
+// LeerSmaps lee el archivo /proc/[pid]/smaps y devuelve la información en formato JSON.
+// Recibe los siguientes parámetros:
+// - w: objeto http.ResponseWriter utilizado para enviar la respuesta HTTP.
+// - r: objeto *http.Request que contiene la solicitud HTTP recibida.
 func LeerSmaps(w http.ResponseWriter, r *http.Request) {
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
@@ -440,11 +453,17 @@ func LeerSmaps(w http.ResponseWriter, r *http.Request) {
 	sendJSONResponseB(w, http.StatusOK, data)
 }
 
+// DataTotal representa una estructura de datos que contiene los totales de tamaño y Rss.
 type DataTotal struct {
 	TotalSize float64 `json:"totalSize"`
 	TotalRss  float64 `json:"totalRss"`
 }
 
+// LeerSmapsSizeRss lee el archivo /proc/[pid]/smaps, calcula los totales de tamaño y Rss,
+// y devuelve la información en formato JSON.
+// Recibe los siguientes parámetros:
+// - w: objeto http.ResponseWriter utilizado para enviar la respuesta HTTP.
+// - r: objeto *http.Request que contiene la solicitud HTTP recibida.
 func LeerSmapsSizeRss(w http.ResponseWriter, r *http.Request) {
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
